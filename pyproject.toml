@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stadim"
+version = "0.1.0"
+description = "STADIM: Adaptive Deep Metric Learning for Denoising and Integration of Multi-Slice Spatial Transcriptomics"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name="Shutong Xiao" }]
+dependencies = [
+    "torch==2.2.1",
+    "annoy==1.17.3",
+    "hnswlib==0.8.0",
+    "scikit-misc==0.3.1",
+    "scanpy==1.10.3",
+    "anndata>=0.8.0",
+    "numpy==1.26.4",
+    "pandas==2.2.3",
+    "tqdm==4.67.1",
+    "scikit-learn==1.6.1",
+    "scipy==1.13.1",
+    "matplotlib==3.9.4",
+    "pytorch-metric-learning==2.9.0",
+    "torch-geometric==2.6.1",
+    "psutil",
+]
+
+[project.scripts]
+stadim = "stadim.run_STADIM:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

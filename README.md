@@ -19,8 +19,12 @@ Spatial transcriptomics (ST) enables high-resolution mapping of gene expression 
 conda create -n stadim python=3.9 -y
 conda activate stadim
 
-# Install STADIM directly from GitHub
+## Install STADIM directly from GitHub
 pip install git+https://github.com/xiaoshutong273/STADIM.git
+
+## or download the zip from GitHub and unqip the folder
+cd STADIM-main
+pip install .
 
 # To use the environment in jupyter notebook, add python kernel for this environment.
 pip install ipykernel

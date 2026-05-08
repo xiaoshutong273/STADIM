@@ -1,0 +1,11 @@
+sphinx
+nbsphinx
+ipykernel
+jupyter
+myst-parser
+sphinx-rtd-theme
+scanpy
+anndata
+torch
+numpy
+matplotlib

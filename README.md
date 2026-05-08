@@ -5,12 +5,12 @@
 STADIM is a deep learning framework for transcriptome-wide consistent denoising and integration of spatial transcriptomics data.
 
 <p align="center">
-  <img width="3909" height="2873" alt="Fig1" src="https://github.com/user-attachments/assets/797f00e1-eaab-4cce-ba46-5e7137f7b170" />
+  <img width="3909" height="2873" alt="Fig1" src="https://github.com/user-attachments/assets/26581439-f32e-4adc-935a-d6e67d97592d" />
 </p>
 
 ## Overview
 
-Spatial transcriptomics (ST) enables high-resolution mapping of gene expression across tissues, yet its application is limited by pervasive technical noise, batch effects, and the lack of unified models for joint denoising and integration. Here, we present STADIM, a deep-learning framework for consistent representation of multi-slice ST data through transcriptome-wide denoising and integration. STADIM operates directly in high-dimensional gene expression space and employs a dual-branch architecture to explicitly disentangle biological signals from technical variation. By integrating latent biological embeddings with batch-specific representations and reconstructing expression profiles under a negative binomial (NB) model beyond highly variable genes, STADIM effectively reduces stochastic noise while preserving fine-grained spatial structure. In addition, an adaptive triplet learning strategy enhances cross-slice alignment and robustness across heterogeneous datasets. Extensive evaluations across diverse tissues, disease states, and sequencing platforms demonstrate that STADIM consistently outperforms state-of-the-art methods in denoising, batch correction, and spatial structure preservation, while maintaining biologically meaningful patterns such as tumor microenvironment heterogeneity, tertiary lymphoid structures, and cardiovascular inflammatory pathways.
+Spatial transcriptomics (ST) enables high-resolution mapping of gene expression across tissues, yet its application is limited by pervasive technical noise, batch effects, and the lack of unified models for joint denoising and integration. Here, we present STADIM, a deep-learning framework for consistent representation of multi-slice ST data through transcriptome-wide denoising and integration. STADIM operates directly in high-dimensional gene expression space and employs a dual-branch architecture to explicitly disentangle biological signals from technical variation. By integrating latent biological embeddings with batch-specific representations and reconstructing expression profiles under a negative binomial model beyond highly variable genes, STADIM effectively reduces stochastic noise while preserving fine-grained spatial structure. In addition, an adaptive triplet learning strategy enhances cross-slice alignment and robustness across heterogeneous datasets. Extensive evaluations across diverse tissues, disease states, and sequencing platforms demonstrate that STADIM consistently outperforms state-of-the-art methods in denoising, batch correction, and spatial structure preservation, while maintaining biologically meaningful patterns such as tumor microenvironment heterogeneity, tertiary lymphoid structures, and cardiovascular inflammatory pathways.
 
 ## Installation
 
@@ -41,8 +41,8 @@ stadim --input ./data.h5ad --save_preprocessed_h5ad ./data_preprocessed.h5ad --s
 | Argument | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `--input` | `str` | **Required** | Path(s) to input `.h5ad` file(s). Supports single file like `"./data.h5ad"`, or multiple paths like `"./data1.h5ad" "./data2.h5ad" "./data3.h5ad"`. |
-| `--save_preprocessed_h5ad` | `str` | **Required** | Filename (ending in `.h5ad`) to save the data after initial filtering and preprocessing. This file serves as the clean input for the training model. If you do not wish to save the filtered intermediate file to disk, set this to `None`. |
-| `--save_dir` | `str` | **Required** | Directory where all output results will be stored. |
+| `--save_preprocessed_h5ad` | `str` | None | Filename (ending in `.h5ad`) to save the data after initial filtering and preprocessing. This file serves as the clean input for the training model. If you do not wish to save the filtered intermediate file to disk, omit it. |
+| `--save_dir` | `str` | None | Directory where all output results will be stored. |
 | `--batch_key` | `str` | `"sample"` | The column name in `adata.obs` used to distinguish different batches or samples. If not, you can set it to `None` and add that information in `--sample_names`. |
 | `--sample_names` | `str` | `None` | Used to name and distinguish batches if no sample column exists in `adata.obs`. If omitted, samples are named S1, S2, S3... by input order and stored under the `"sample"` key. |
 
@@ -52,7 +52,7 @@ stadim --input ./data.h5ad --save_preprocessed_h5ad ./data_preprocessed.h5ad --s
 | `--min_genes` | `int` | `0` | Filter out cells with fewer than this many genes. |
 | `--min_cells` | `int` | `10` | Filter out genes expressed in fewer than this many cells. |
 | `--nhvgs` | `int` | `2000` | Number of Highly Variable Genes to select for PCA analysis. |
-| `--dim` | `int` | `100` | Number of Principal Components (PCs) used for initial neighbor searching. |
+| `--dim` | `int` | `50` | Number of Principal Components (PCs) used for initial neighbor searching. |
 
 ### 3. Triplet Sampling
 | Argument | Type | Default | Description |
@@ -104,6 +104,6 @@ You can also test the full pipeline using the provided demo dataset (Mouse Olfac
 
 ```bash
 nohup stadim --input "./MOB_stereoseq.h5ad" "./MOB_slideseq.h5ad" \
-    --save_preprocessed_h5ad None --save_dir ./MOB_test --device "cuda:0" --monitor --seed 2026 \
+    --save_preprocessed_h5ad ./MOB_test/data_preprocessed.h5ad --save_dir ./MOB_test --device "cuda:0" --monitor --seed 2026 \
     --min_genes 10 --min_cells 10 --knn_c 30 --knn_e 70 --mnn_n 100 > ./MOB_test.log 2>&1 &
 ```

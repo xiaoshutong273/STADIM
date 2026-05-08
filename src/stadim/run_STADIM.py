@@ -149,8 +149,8 @@ def run_STADIM(file_list, save_dir=None, sample_names=None, batch_key='sample', 
 def main():
     parser = argparse.ArgumentParser(description="Run STADIM ...")
     parser.add_argument("--input", type=str, nargs='+', required=True, help="Input h5ad file path(s)")
-    parser.add_argument("--save_preprocessed_h5ad", type=str, required=True, help="Save pre.h5ad file path")
-    parser.add_argument("--save_dir", type=str, required=True, help="Results directory")
+    parser.add_argument("--save_preprocessed_h5ad", type=str, default=None, help="Save pre.h5ad file path")
+    parser.add_argument("--save_dir", type=str, default=None, help="Results directory")
     parser.add_argument("--device", type=str, default="cuda:0", help="Device (e.g., cuda:0)")
     parser.add_argument("--monitor", action="store_true", help="Enable resource monitor")
     parser.add_argument("--seed", type=int, default=2026, help="Random seed")
@@ -193,7 +193,7 @@ def main():
     print("="*40 + "\n")
 
     monitor = None
-    if monitor_on:
+    if monitor_on and save_dir is not None:
         gpu_id = int(device.split(':')[-1]) if 'cuda' in device else None
         trace_path = os.path.join(save_dir, f"resource_trace_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt")
         monitor = ResourceMonitor(os.getpid(), device_id=gpu_id, log_path=trace_path)
@@ -221,16 +221,17 @@ def main():
     if monitor:
         stats = monitor.stop()
     
-    print(f"Done. Time {elapsed}min, Mem {stats['max_rss_mb']}MB, GPU {stats['max_vram_mb']}MB")
-    input_basenames = [os.path.basename(f) for f in args.input]
-    perf_data = [{
-        "sample": str(input_basenames), 
-        "time_min": elapsed, 
-        "mem_peak_mb": stats['max_rss_mb'], 
-        "gpu_peak_mb": stats['max_vram_mb'],
-        "status": "Success" if success else "Failed"
-    }]
-    pd.DataFrame(perf_data).to_csv(os.path.join(save_dir, "performance.csv"), index=False)
+        print(f"Done. Time {elapsed}min, Mem {stats['max_rss_mb']}MB, GPU {stats['max_vram_mb']}MB")
+        input_basenames = [os.path.basename(f) for f in args.input]
+        perf_data = [{
+            "sample": str(input_basenames), 
+            "time_min": elapsed, 
+            "mem_peak_mb": stats['max_rss_mb'], 
+            "gpu_peak_mb": stats['max_vram_mb'],
+            "status": "Success" if success else "Failed"
+        }]
+        pd.DataFrame(perf_data).to_csv(os.path.join(save_dir, "performance.csv"), index=False)
+
 
 if __name__ == "__main__":
     main()

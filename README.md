@@ -30,6 +30,7 @@ pip install .
 pip install ipykernel
 python -m ipykernel install --user --name=STADIM
 ```
+
 The code has been successfully tested on macOS and Ubuntu 24.04. We highly recommend running the program on a GPU-enabled device for optimal performance.
 
 ## Quick Start

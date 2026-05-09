@@ -22,7 +22,7 @@ conda activate stadim
 ## Install STADIM directly from GitHub
 pip install git+https://github.com/xiaoshutong273/STADIM.git
 
-## or download the zip from GitHub and unqip the folder
+## or download the zip from GitHub and unzip the folder
 cd STADIM-main
 pip install .
 

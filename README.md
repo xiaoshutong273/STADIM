@@ -5,7 +5,7 @@
 STADIM is a deep learning framework for transcriptome-wide consistent denoising and integration of spatial transcriptomics data.
 
 <p align="center">
-  <img width="3909" height="2873" alt="Fig1" src="https://github.com/user-attachments/assets/26581439-f32e-4adc-935a-d6e67d97592d" />
+  <img width="3909" height="2873" alt="Fig1" src="https://github.com/user-attachments/assets/1062464f-bbce-4bcd-a5dc-2d093a0e8017" />
 </p>
 
 ## Overview

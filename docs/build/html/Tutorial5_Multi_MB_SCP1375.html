@@ -1,0 +1,1094 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial 5: Corss-disease states denoising and integration of STARmap PLUS datasets for AD &mdash; STADIM 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 6: Scalability analysis on million-scale Visium HD datasets" href="Tutorial6_Multi_VisiumHD.html" />
+    <link rel="prev" title="Tutorial 4: Cross-platform denoising and integration of MOB datasets" href="Tutorial4_Multi_MOB.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            STADIM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Tutorial1_Single_DLPFC.html">Tutorial 1: Denoising on single-slice DLPFC data from 10x Visium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial2_Multi_DLPFC.html">Tutorial 2: Vertical denoising and integration on DLPFC multi slices from 10x Visium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial3_Multi_MB.html">Tutorial 3: Horizontal denoising and integration on Mouse Brain dataset from 10x Visium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial4_Multi_MOB.html">Tutorial 4: Cross-platform denoising and integration of MOB datasets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial 5: Corss-disease states denoising and integration of STARmap PLUS datasets for AD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Quick-view-data">Quick view data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Run-STADIM">Run STADIM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Analysis">Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Batch-Entropy">Batch Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weighted-Coefficient-of-Variation-(wCV)">weighted Coefficient of Variation (wCV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Latent-representation-Umap">Latent representation Umap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Plaque-Induced-Genes-(PIGs)-co-expression-patterns">Plaque-Induced Genes (PIGs) co-expression patterns</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial6_Multi_VisiumHD.html">Tutorial 6: Scalability analysis on million-scale Visium HD datasets</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">STADIM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial 5: Corss-disease states denoising and integration of STARmap PLUS datasets for AD</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Tutorial5_Multi_MB_SCP1375.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Tutorial-5:-Corss-disease-states-denoising-and-integration-of-STARmap-PLUS-datasets-for-AD">
+<h1>Tutorial 5: Corss-disease states denoising and integration of STARmap PLUS datasets for AD<a class="headerlink" href="#Tutorial-5:-Corss-disease-states-denoising-and-integration-of-STARmap-PLUS-datasets-for-AD" title="Link to this heading"></a></h1>
+<div class="line-block">
+<div class="line">In this tutorial, we apply STADIM to an in situ sequencing dataset generated by STARmap PLUS, derived from a mouse model of Alzheimer’s disease (AD). This dataset includes detailed cell-type annotations as well as the spatial locations of amyloid plaque cores in the disease slices S5-S8.</div>
+<div class="line">We download the data and information of amyloid plaque cores under study SCP1375 <a class="reference external" href="https://singlecell.broadinstitute.org/single_cell/study/SCP1375">https://singlecell.broadinstitute.org/single_cell/study/SCP1375</a>.</div>
+</div>
+<section id="Quick-view-data">
+<h2>Quick view data<a class="headerlink" href="#Quick-view-data" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">sample_ids</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)]</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/&#39;</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sample_ids</span><span class="p">):</span>
+    <span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">s_id</span><span class="si">}</span><span class="s1">.h5ad&#39;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">s_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">spatial</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;top_level_cell_type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Sample </span><span class="si">{</span><span class="n">s_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">spot_size</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/xiaost/anaconda3/envs/stadim/lib/python3.9/site-packages/louvain/__init__.py:54: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  from pkg_resources import get_distribution, DistributionNotFound
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+S1
+AnnData object with n_obs × n_vars = 9803 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+S2
+AnnData object with n_obs × n_vars = 8506 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+S3
+AnnData object with n_obs × n_vars = 9428 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+S4
+AnnData object with n_obs × n_vars = 8034 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+S5
+AnnData object with n_obs × n_vars = 8202 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+S6
+AnnData object with n_obs × n_vars = 8186 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+S7
+AnnData object with n_obs × n_vars = 9634 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+S8
+AnnData object with n_obs × n_vars = 10372 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;
+    obsm: &#39;spatial&#39;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Tutorial5_Multi_MB_SCP1375_3_2.png" src="_images/Tutorial5_Multi_MB_SCP1375_3_2.png" />
+</div>
+</div>
+</section>
+<section id="Run-STADIM">
+<h2>Run STADIM<a class="headerlink" href="#Run-STADIM" title="Link to this heading"></a></h2>
+<p><strong>Note: For the high-resolution dataset, we added filtering criteria to the cells and selected more candidate neighbors during the triplet construction phase.</strong></p>
+<p>You can call the STADIM command directly in your terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nohup<span class="w"> </span>stadim<span class="w"> </span>--input<span class="w"> </span><span class="s2">&quot;./S&quot;</span><span class="o">{</span><span class="m">1</span>,2,3,4,5,6,7,8<span class="o">}</span><span class="s2">&quot;.h5ad&quot;</span><span class="w"> </span>--save_dir<span class="w"> </span>./MB_SCP1375_test<span class="w"> </span>--device<span class="w"> </span><span class="s2">&quot;cuda:0&quot;</span><span class="w"> </span>--monitor<span class="w"> </span>--seed<span class="w"> </span><span class="m">2026</span><span class="w"> </span>--min_genes<span class="w"> </span><span class="m">10</span><span class="w"> </span>--min_cells<span class="w"> </span><span class="m">10</span><span class="w"> </span>--knn_c<span class="w"> </span><span class="m">30</span><span class="w"> </span>--knn_e<span class="w"> </span><span class="m">70</span><span class="w"> </span>--mnn_n<span class="w"> </span><span class="m">100</span><span class="w"> </span>&gt;<span class="w"> </span>./MB_SCP1375_test.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">&amp;</span>
+</pre></div>
+</div>
+<p>and load the results into your Python environment for downstream analysis. The denoised expression matrix is conveniently stored within the <code class="docutils literal notranslate"><span class="pre">layers</span></code> attribute:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">anndata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ad</span>
+
+<span class="n">adata</span> <span class="o">=</span> <span class="n">ad</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s1">&#39;/MB_SCP1375_test/sdata.h5ad&#39;</span><span class="p">)</span>
+
+<span class="c1">## The denoised gene expressionis is stored in adata.layers[&#39;STADIM&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or you can call STADIM within a Jupyter Notebook as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stadim</span>
+
+<span class="n">adata</span> <span class="o">=</span> <span class="n">stadim</span><span class="o">.</span><span class="n">run_STADIM</span><span class="p">([</span><span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S1.h5ad&#39;</span><span class="p">,</span> <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S2.h5ad&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S3.h5ad&#39;</span><span class="p">,</span> <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S4.h5ad&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S5.h5ad&#39;</span><span class="p">,</span> <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S6.h5ad&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S7.h5ad&#39;</span><span class="p">,</span> <span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/S8.h5ad&#39;</span><span class="p">],</span>
+                          <span class="n">save_preprocessed_h5ad</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">sample_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_key</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:5&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2026</span><span class="p">,</span>
+                          <span class="n">min_genes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_cells</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">nhvgs</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">knn_c</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">knn_e</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">mnn_n</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                          <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">triplets_update_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">hard_triplets_ratio</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+                          <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">loss_mode</span><span class="o">=</span><span class="s1">&#39;nb&#39;</span><span class="p">,</span> <span class="n">beta_trip</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                          <span class="n">encoder_layers</span><span class="o">=</span><span class="p">[</span><span class="mi">512</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span> <span class="n">decoder_layers</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Results will be stored in adata.layers[&#39;STADIM&#39;]
+
+=== 1. Begin read_data!
+Detected multi-slice data, total 8 slices
+  Slice 1: Using user-defined column &#39;sample&#39; as sample
+  Slice 1: Keeping existing sample label S1
+  Warning: Slice S1 has no valid uns[&#39;spatial&#39;] info
+  Slice 2: Using user-defined column &#39;sample&#39; as sample
+  Slice 2: Keeping existing sample label S2
+  Warning: Slice S2 has no valid uns[&#39;spatial&#39;] info
+  Slice 3: Using user-defined column &#39;sample&#39; as sample
+  Slice 3: Keeping existing sample label S3
+  Warning: Slice S3 has no valid uns[&#39;spatial&#39;] info
+  Slice 4: Using user-defined column &#39;sample&#39; as sample
+  Slice 4: Keeping existing sample label S4
+  Warning: Slice S4 has no valid uns[&#39;spatial&#39;] info
+  Slice 5: Using user-defined column &#39;sample&#39; as sample
+  Slice 5: Keeping existing sample label S5
+  Warning: Slice S5 has no valid uns[&#39;spatial&#39;] info
+  Slice 6: Using user-defined column &#39;sample&#39; as sample
+  Slice 6: Keeping existing sample label S6
+  Warning: Slice S6 has no valid uns[&#39;spatial&#39;] info
+  Slice 7: Using user-defined column &#39;sample&#39; as sample
+  Slice 7: Keeping existing sample label S7
+  Warning: Slice S7 has no valid uns[&#39;spatial&#39;] info
+  Slice 8: Using user-defined column &#39;sample&#39; as sample
+  Slice 8: Keeping existing sample label S8
+  Warning: Slice S8 has no valid uns[&#39;spatial&#39;] info
+
+Merging data...
+
+Raw Merged Data: 72165 spots × 2766 genes
+Unified Filtering (min_genes=10, min_cells=10)...
+  → After Filtering: 72165 spots × 2766 genes
+  ✓ Complete: Samples included: [&#39;S1&#39;, &#39;S2&#39;, &#39;S3&#39;, &#39;S4&#39;, &#39;S5&#39;, &#39;S6&#39;, &#39;S7&#39;, &#39;S8&#39;]
+  ✓ Complete: AnnData object with n_obs × n_vars = 72165 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;, &#39;n_genes&#39;
+    var: &#39;n_cells&#39;
+    obsm: &#39;spatial&#39;
+    layers: &#39;X_raw&#39;
+
+=== 2. Begin MY_preprocess!
+== Selected 2000 HVGs across 8 slices
+
+=== 3. Begin all_ap find neighbors!
+
+=== 4. Begin pre_dataset!
+{0: &#39;S1&#39;, 1: &#39;S2&#39;, 2: &#39;S3&#39;, 3: &#39;S4&#39;, 4: &#39;S5&#39;, 5: &#39;S6&#39;, 6: &#39;S7&#39;, 7: &#39;S8&#39;}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Preparing triplet: 100%|██████████| 72165/72165 [00:17&lt;00:00, 4045.07it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+=== 5. Begin IterableTripletDataset!
+Initializing triplets...
+IterableTripletDataset Initialized: 72165 anchors, batch_size=256
+
+=== 6. Begin calculate_recommended_margin!
+Calculating recommended margin (averaging over 5 runs)...
+
+========================================
+Margins from 5 runs: [4.0721, 4.0501, 4.0252, 3.9645, 3.9303]
+Final Recommended Margin: 4.0084
+
+=== 7. Starting training...
+Begin training: device=cuda:5
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Training: 100%|██████████| 100/100 [14:33&lt;00:00,  8.73s/it, recon=0.175, triplet=0.351, total=0.210]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+=== 8. Generating denoised expression...
+   Data size (2.00e+08) is within limits. Allocating memory for denoised data.
+
+All processes finished! Total time: 22.07 mins.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+AnnData object with n_obs × n_vars = 72165 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;, &#39;n_genes&#39;, &#39;n_genes_by_counts&#39;, &#39;log1p_n_genes_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;size_factor&#39;
+    var: &#39;n_cells&#39;, &#39;n_cells_by_counts&#39;, &#39;mean_counts&#39;, &#39;log1p_mean_counts&#39;, &#39;pct_dropout_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;highly_variable&#39;
+    uns: &#39;log1p&#39;, &#39;top_hvgs&#39;
+    obsm: &#39;spatial&#39;, &#39;S_scale&#39;, &#39;X_hvg_scale&#39;, &#39;X_pca&#39;, &#39;cell_names&#39;, &#39;STADIM&#39;
+    layers: &#39;X_raw&#39;, &#39;X_norm&#39;, &#39;X_log&#39;, &#39;STADIM&#39;, &#39;STADIM_withbatch&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="Analysis">
+<h2>Analysis<a class="headerlink" href="#Analysis" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">anndata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ad</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.lines</span><span class="w"> </span><span class="kn">import</span> <span class="n">Line2D</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpatches</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="s1">&#39;axes.titlesize&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="s1">&#39;xtick.labelsize&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="s1">&#39;ytick.labelsize&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="n">styles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;STADIM&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;#d62728&#39;</span><span class="p">,</span> <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;ms&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;lw&#39;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span> <span class="s1">&#39;zorder&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+    <span class="s1">&#39;X_norm&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;#c7c7c7&#39;</span><span class="p">,</span> <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;ms&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;lw&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;zorder&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<section id="Batch-Entropy">
+<h3>Batch Entropy<a class="headerlink" href="#Batch-Entropy" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">stadim</span><span class="o">.</span><span class="n">calculate_batch_entropy</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">test_layers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;X_norm&#39;</span><span class="p">,</span> <span class="s1">&#39;STADIM&#39;</span><span class="p">],</span> <span class="n">k_range</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+                                     <span class="n">group_key</span><span class="o">=</span><span class="s1">&#39;top_level_cell_type&#39;</span><span class="p">,</span> <span class="n">donor_id</span><span class="o">=</span><span class="s1">&#39;MB_SCP1375&#39;</span><span class="p">,</span> <span class="n">batch_key</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">n_hvg</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+
+<span class="n">batch_entropy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">batch_entropy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Method</th>
+      <th>Donor_ID</th>
+      <th>K</th>
+      <th>Avg_Entropy</th>
+      <th>Avg_Region_Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>10</td>
+      <td>0.599390</td>
+      <td>0.756310</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>20</td>
+      <td>0.681480</td>
+      <td>0.747287</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>30</td>
+      <td>0.715242</td>
+      <td>0.741435</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>40</td>
+      <td>0.734649</td>
+      <td>0.736935</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>50</td>
+      <td>0.747662</td>
+      <td>0.733296</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>60</td>
+      <td>0.757433</td>
+      <td>0.730088</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>70</td>
+      <td>0.764947</td>
+      <td>0.727324</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>80</td>
+      <td>0.771243</td>
+      <td>0.724833</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>90</td>
+      <td>0.776517</td>
+      <td>0.722585</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>X_norm</td>
+      <td>MB_SCP1375</td>
+      <td>100</td>
+      <td>0.781012</td>
+      <td>0.720530</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>10</td>
+      <td>0.744407</td>
+      <td>0.892131</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>20</td>
+      <td>0.846148</td>
+      <td>0.887282</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>30</td>
+      <td>0.882931</td>
+      <td>0.884265</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>40</td>
+      <td>0.901661</td>
+      <td>0.881914</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>50</td>
+      <td>0.913067</td>
+      <td>0.880034</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>60</td>
+      <td>0.920889</td>
+      <td>0.878479</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>70</td>
+      <td>0.926654</td>
+      <td>0.877071</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>80</td>
+      <td>0.931002</td>
+      <td>0.875830</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>90</td>
+      <td>0.934447</td>
+      <td>0.874692</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>STADIM</td>
+      <td>MB_SCP1375</td>
+      <td>100</td>
+      <td>0.937294</td>
+      <td>0.873666</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 21min 28s, sys: 31.1 s, total: 21min 59s
+Wall time: 5min 30s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Avg_Entropy&#39;</span><span class="p">,</span> <span class="s1">&#39;Avg_Region_Ratio&#39;</span><span class="p">]</span>
+<span class="n">y_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Batch Entropy </span><span class="se">\u2191</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;Label Consistency </span><span class="se">\u2191</span><span class="s1">&#39;</span><span class="p">]</span>
+
+<span class="n">plot_data</span> <span class="o">=</span> <span class="n">batch_entropy</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Method&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">])[</span><span class="n">metrics</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;STADIM&#39;</span><span class="p">,</span><span class="s1">&#39;X_norm&#39;</span><span class="p">]:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">plot_data</span><span class="p">[</span><span class="n">plot_data</span><span class="p">[</span><span class="s1">&#39;Method&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span> <span class="k">continue</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">metric</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">m</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;marker&#39;</span><span class="p">],</span>
+                <span class="n">markersize</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;ms&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;lw&#39;</span><span class="p">],</span>
+                <span class="n">zorder</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="s1">&#39;zorder&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;#MB_SCP1375&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Neighbors (K)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+           <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Methods&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Tutorial5_Multi_MB_SCP1375_13_0.png" src="_images/Tutorial5_Multi_MB_SCP1375_13_0.png" />
+</div>
+</div>
+</section>
+<section id="weighted-Coefficient-of-Variation-(wCV)">
+<h3>weighted Coefficient of Variation (wCV)<a class="headerlink" href="#weighted-Coefficient-of-Variation-(wCV)" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">benchmark_adata</span> <span class="o">=</span> <span class="n">stadim</span><span class="o">.</span><span class="n">create_shuffled_batches</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">n_batches</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">benchmark_adata</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">benchmark adata: </span><span class="si">{</span><span class="n">benchmark_adata</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+benchmark adata: AnnData object with n_obs × n_vars = 72165 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;, &#39;n_genes&#39;, &#39;n_genes_by_counts&#39;, &#39;log1p_n_genes_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;size_factor&#39;, &#39;sim_batch&#39;
+    var: &#39;n_cells&#39;, &#39;n_cells_by_counts&#39;, &#39;mean_counts&#39;, &#39;log1p_mean_counts&#39;, &#39;pct_dropout_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;highly_variable&#39;
+    obsm: &#39;spatial&#39;, &#39;S_scale&#39;, &#39;X_hvg_scale&#39;, &#39;X_pca&#39;, &#39;STADIM&#39;
+    layers: &#39;X_raw&#39;, &#39;X_norm&#39;, &#39;X_log&#39;, &#39;STADIM&#39;, &#39;STADIM_withbatch&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">wcv</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">gene_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;HVGs&quot;</span><span class="p">,</span> <span class="s2">&quot;LVGs&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">gene_type: </span><span class="si">{</span><span class="n">gene_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># wCV before and after STADIM</span>
+    <span class="n">res_deno</span> <span class="o">=</span> <span class="n">stadim</span><span class="o">.</span><span class="n">calculate_cv</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">batch_key</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">label_key</span><span class="o">=</span><span class="s1">&#39;top_level_cell_type&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;X_norm&#39;</span><span class="p">,</span> <span class="s1">&#39;STADIM&#39;</span><span class="p">],</span> <span class="n">gene_type</span><span class="o">=</span><span class="n">gene_type</span><span class="p">)</span>
+
+    <span class="c1"># wCV of simulated benchmark no batch data, calculated with X_norm and shuffled labels</span>
+    <span class="n">res_bench</span> <span class="o">=</span> <span class="n">stadim</span><span class="o">.</span><span class="n">calculate_cv</span><span class="p">(</span><span class="n">benchmark_adata</span><span class="p">,</span> <span class="n">batch_key</span><span class="o">=</span><span class="s1">&#39;sim_batch&#39;</span><span class="p">,</span> <span class="n">label_key</span><span class="o">=</span><span class="s1">&#39;top_level_cell_type&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;X_norm&#39;</span><span class="p">],</span> <span class="n">gene_type</span><span class="o">=</span><span class="n">gene_type</span><span class="p">)</span>
+    <span class="n">res_bench</span> <span class="o">=</span> <span class="n">res_bench</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;X_norm&#39;</span><span class="p">:</span> <span class="s1">&#39;Sim_NoBatch&#39;</span><span class="p">})</span>
+
+    <span class="n">wcv</span><span class="p">[</span><span class="n">gene_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_bench</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res_deno</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">wcv</span><span class="p">[</span><span class="s2">&quot;HVGs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+gene_type: HVGs
+--- Calculating CV on 2000 genes of type: HVGs ---
+Methods successfully calculated: [&#39;X_norm&#39;, &#39;STADIM&#39;]
+--- Calculating CV on 2000 genes of type: HVGs ---
+Methods successfully calculated: [&#39;X_norm&#39;]
+
+gene_type: LVGs
+--- Calculating CV on 766 genes of type: LVGs ---
+Methods successfully calculated: [&#39;X_norm&#39;, &#39;STADIM&#39;]
+--- Calculating CV on 766 genes of type: LVGs ---
+Methods successfully calculated: [&#39;X_norm&#39;]
+         Sim_NoBatch    X_norm    STADIM
+A2m         0.146133  0.296734  0.103721
+Aak1        0.189289  0.339597  0.105297
+Abca7       0.150978  0.284041  0.099893
+Abcc9       0.203739  0.373357  0.148119
+Abhd17a     0.232470  0.408655  0.161237
+CPU times: user 6.62 s, sys: 3.46 s, total: 10.1 s
+Wall time: 10.1 s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1.inset_locator</span><span class="w"> </span><span class="kn">import</span> <span class="n">inset_axes</span>
+
+<span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Sim_NoBatch&#39;</span><span class="p">,</span> <span class="s1">&#39;X_norm&#39;</span><span class="p">,</span> <span class="s1">&#39;STADIM&#39;</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Sim_NoBatch&#39;</span><span class="p">:</span> <span class="s1">&#39;#ff9896&#39;</span><span class="p">,</span> <span class="s1">&#39;X_norm&#39;</span><span class="p">:</span> <span class="s1">&#39;#c7c7c7&#39;</span><span class="p">,</span> <span class="s1">&#39;STADIM&#39;</span><span class="p">:</span> <span class="s1">&#39;#d62728&#39;</span><span class="p">}</span>
+<span class="n">gene_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;HVGs&#39;</span><span class="p">,</span> <span class="s1">&#39;LVGs&#39;</span><span class="p">]</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g_type</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">gene_types</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">wcv</span><span class="p">[</span><span class="n">g_type</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span> <span class="k">continue</span>
+
+        <span class="n">style</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">m</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">colors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;#333333&#39;</span><span class="p">),</span> <span class="s1">&#39;fill&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mf">2.5</span> <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="s1">&#39;X_norm&#39;</span> <span class="k">else</span> <span class="mf">1.5</span><span class="p">,</span>
+            <span class="s1">&#39;linestyle&#39;</span><span class="p">:</span> <span class="s1">&#39;--&#39;</span> <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="s1">&#39;Sim_NoBatch&#39;</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;zorder&#39;</span><span class="p">:</span> <span class="mi">10</span> <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="s1">&#39;STADIM&#39;</span> <span class="k">else</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s1">&#39;cut&#39;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">}</span>
+
+        <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">style</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;#MB_SCP1375 (</span><span class="si">{</span><span class="n">g_type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Weighted Coefficient of Variation </span><span class="se">\u2193</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+           <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Methods&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Tutorial5_Multi_MB_SCP1375_17_0.png" src="_images/Tutorial5_Multi_MB_SCP1375_17_0.png" />
+</div>
+</div>
+</section>
+<section id="Latent-representation-Umap">
+<h3>Latent representation Umap<a class="headerlink" href="#Latent-representation-Umap" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">use_rep</span><span class="o">=</span><span class="s1">&#39;STADIM&#39;</span><span class="p">,</span> <span class="n">key_added</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;neighbors_STADIM&#39;</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">neighbors_key</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;neighbors_STADIM&#39;</span><span class="p">)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_umap_STADIM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;X_umap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+AnnData object with n_obs × n_vars = 72165 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;, &#39;n_genes&#39;, &#39;n_genes_by_counts&#39;, &#39;log1p_n_genes_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;size_factor&#39;
+    var: &#39;n_cells&#39;, &#39;n_cells_by_counts&#39;, &#39;mean_counts&#39;, &#39;log1p_mean_counts&#39;, &#39;pct_dropout_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;highly_variable&#39;
+    uns: &#39;log1p&#39;, &#39;top_hvgs&#39;, &#39;neighbors_STADIM&#39;, &#39;umap&#39;
+    obsm: &#39;spatial&#39;, &#39;S_scale&#39;, &#39;X_hvg_scale&#39;, &#39;X_pca&#39;, &#39;STADIM&#39;, &#39;X_umap&#39;, &#39;X_umap_STADIM&#39;
+    layers: &#39;X_raw&#39;, &#39;X_norm&#39;, &#39;X_log&#39;, &#39;STADIM&#39;, &#39;STADIM_withbatch&#39;
+    obsp: &#39;neighbors_STADIM_distances&#39;, &#39;neighbors_STADIM_connectivities&#39;
+CPU times: user 8min 1s, sys: 1.2 s, total: 8min 2s
+Wall time: 2min 6s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;X_umap_STADIM&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;top_level_cell_type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;on data&#39;</span><span class="p">,</span> <span class="n">legend_fontweight</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;STADIM (Label)&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">adata</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">n_obs</span><span class="p">)],</span> <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;X_umap_STADIM&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;STADIM (Sample)&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Tutorial5_Multi_MB_SCP1375_20_0.png" src="_images/Tutorial5_Multi_MB_SCP1375_20_0.png" />
+</div>
+</div>
+</section>
+<section id="Plaque-Induced-Genes-(PIGs)-co-expression-patterns">
+<h3>Plaque-Induced Genes (PIGs) co-expression patterns<a class="headerlink" href="#Plaque-Induced-Genes-(PIGs)-co-expression-patterns" title="Link to this heading"></a></h3>
+<p>Calculate how far each cell is from the nearest Alzheimer’s plaque.</p>
+<p>WHAT THIS CODE DOES:</p>
+<ol class="arabic simple">
+<li><p>Load precise X/Y coordinates for all cells (S1-S8).</p></li>
+<li><p>Load the location of plaques for disease samples (S5-S8).</p></li>
+<li><p>Compute the distance between each cell and its closest plaque.</p></li>
+</ol>
+<p>RESULT: Each cell in the disease samples now has a ‘min_dist_to_plaque’ value, allowing us to study how proximity to plaques affects gene expression.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">cdist</span>
+
+<span class="c1"># 1. Initialize coordinate storage and plaque data container</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;spatial_scaled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">adata</span><span class="o">.</span><span class="n">n_obs</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">plaque_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">all_samples</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)]</span>
+<span class="n">disease_samples</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S5&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;S7&#39;</span><span class="p">,</span> <span class="s1">&#39;S8&#39;</span><span class="p">]</span>
+
+<span class="c1"># 2. Process all samples to align spatial coordinates</span>
+<span class="k">for</span> <span class="n">s_id</span> <span class="ow">in</span> <span class="n">all_samples</span><span class="p">:</span>
+    <span class="c1"># Get the file label associated with the sample ID</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">s_id</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Load scaled spatial coordinates from CSV</span>
+    <span class="n">spatial_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/data2/xiaost/SODA/Data/MB_SCP1375/data/spatial_</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">.csv&#39;</span>
+    <span class="n">df_spatial</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">spatial_path</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># Clean and set index with sample prefix to match adata.obs_names</span>
+    <span class="n">df_spatial</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_spatial</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">df_spatial</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s_id</span><span class="si">}</span><span class="s2">_&quot;</span> <span class="o">+</span> <span class="n">df_spatial</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Align and fill coordinates into adata.obsm</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">s_id</span>
+    <span class="n">current_obs_names</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">aligned_data</span> <span class="o">=</span> <span class="n">df_spatial</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">current_obs_names</span><span class="p">)[[</span><span class="s1">&#39;X-scaled&#39;</span><span class="p">,</span> <span class="s1">&#39;Y-scaled&#39;</span><span class="p">]]</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;spatial_scaled&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">aligned_data</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># Load plaque data only for disease samples</span>
+    <span class="k">if</span> <span class="n">s_id</span> <span class="ow">in</span> <span class="n">disease_samples</span><span class="p">:</span>
+        <span class="n">plq_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/data2/xiaost/SODA/Experiments/Fig6_MB_SCP1375/plaque/plaque_</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">.csv&#39;</span>
+        <span class="n">plaque_dict</span><span class="p">[</span><span class="n">s_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">plq_path</span><span class="p">)</span>
+
+<span class="c1"># 3. Calculate distance from cells to nearest plaque for disease samples</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;min_dist_to_plaque&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+<span class="k">for</span> <span class="n">s_id</span> <span class="ow">in</span> <span class="n">disease_samples</span><span class="p">:</span>
+    <span class="c1"># Get cell coordinates for current sample</span>
+    <span class="n">sample_mask</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">s_id</span>
+    <span class="n">cell_coords</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;spatial_scaled&#39;</span><span class="p">][</span><span class="n">sample_mask</span><span class="p">]</span>
+
+    <span class="c1"># Get plaque center coordinates</span>
+    <span class="n">plaque_coords</span> <span class="o">=</span> <span class="n">plaque_dict</span><span class="p">[</span><span class="n">s_id</span><span class="p">][[</span><span class="s1">&#39;m.cx&#39;</span><span class="p">,</span> <span class="s1">&#39;m.cy&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># Compute Euclidean distance matrix (Cells x Plaques)</span>
+    <span class="n">dist_matrix</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">cell_coords</span><span class="p">,</span> <span class="n">plaque_coords</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Store the distance to the closest plaque for each cell</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample_mask</span><span class="p">,</span> <span class="s1">&#39;min_dist_to_plaque&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dist_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+AnnData object with n_obs × n_vars = 72165 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;, &#39;n_genes&#39;, &#39;n_genes_by_counts&#39;, &#39;log1p_n_genes_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;size_factor&#39;, &#39;min_dist_to_plaque&#39;
+    var: &#39;n_cells&#39;, &#39;n_cells_by_counts&#39;, &#39;mean_counts&#39;, &#39;log1p_mean_counts&#39;, &#39;pct_dropout_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;highly_variable&#39;
+    uns: &#39;log1p&#39;, &#39;top_hvgs&#39;, &#39;neighbors_STADIM&#39;, &#39;umap&#39;, &#39;top_level_cell_type_colors&#39;
+    obsm: &#39;spatial&#39;, &#39;S_scale&#39;, &#39;X_hvg_scale&#39;, &#39;X_pca&#39;, &#39;STADIM&#39;, &#39;X_umap&#39;, &#39;X_umap_STADIM&#39;, &#39;spatial_scaled&#39;
+    layers: &#39;X_raw&#39;, &#39;X_norm&#39;, &#39;X_log&#39;, &#39;STADIM&#39;, &#39;STADIM_withbatch&#39;
+    obsp: &#39;neighbors_STADIM_distances&#39;, &#39;neighbors_STADIM_connectivities&#39;
+</pre></div></div>
+</div>
+<p>Analyze the coordinated expression of Plaque-Induced Genes (PIGs) near pathological lesions.</p>
+<p>WHAT THIS CODE DOES:</p>
+<ol class="arabic simple">
+<li><p>Filters the valid PIGs gene set and selects matched random control genes.</p></li>
+<li><p>Computes per-cell PIGs signature scores (e.g., Trem2, Apoe) using both STADIM-denoised and raw expression data.</p></li>
+<li><p>Restricts analysis to cells located within a 150-unit radius of amyloid plaques.</p></li>
+<li><p>Calculates Pearson correlation matrices for PIGs and random control genes to evaluate coordinated gene regulation.</p></li>
+</ol>
+<p>RESULT: Generates comparative heatmaps showing that STADIM-denoised data captures stronger and more coherent PIGs co-expression patterns near pathological lesions compared with raw data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Prepare Gene Lists</span>
+<span class="n">PIGs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Arpc1b&#39;</span><span class="p">,</span> <span class="s1">&#39;C1qa&#39;</span><span class="p">,</span> <span class="s1">&#39;C1qb&#39;</span><span class="p">,</span> <span class="s1">&#39;C1qc&#39;</span><span class="p">,</span> <span class="s1">&#39;C4a&#39;</span><span class="p">,</span> <span class="s1">&#39;Clu&#39;</span><span class="p">,</span> <span class="s1">&#39;Csf1r&#39;</span><span class="p">,</span> <span class="s1">&#39;Cst3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Ctsa&#39;</span><span class="p">,</span> <span class="s1">&#39;Ctss&#39;</span><span class="p">,</span> <span class="s1">&#39;Ctsh&#39;</span><span class="p">,</span> <span class="s1">&#39;Cx3cr1&#39;</span><span class="p">,</span> <span class="s1">&#39;Cyba&#39;</span><span class="p">,</span> <span class="s1">&#39;Fcer1g&#39;</span><span class="p">,</span> <span class="s1">&#39;Fcgr3&#39;</span><span class="p">,</span> <span class="s1">&#39;Fcrls&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Grn&#39;</span><span class="p">,</span> <span class="s1">&#39;Gusb&#39;</span><span class="p">,</span> <span class="s1">&#39;Gns&#39;</span><span class="p">,</span> <span class="s1">&#39;Gpx4&#39;</span><span class="p">,</span> <span class="s1">&#39;Hexb&#39;</span><span class="p">,</span> <span class="s1">&#39;Igfbp5&#39;</span><span class="p">,</span> <span class="s1">&#39;Itgb5&#39;</span><span class="p">,</span> <span class="s1">&#39;Itm2b&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Laptm5&#39;</span><span class="p">,</span> <span class="s1">&#39;Lgmn&#39;</span><span class="p">,</span> <span class="s1">&#39;Ly86&#39;</span><span class="p">,</span> <span class="s1">&#39;Man2b1&#39;</span><span class="p">,</span> <span class="s1">&#39;Mpeg1&#39;</span><span class="p">,</span> <span class="s1">&#39;Olfml3&#39;</span><span class="p">,</span> <span class="s1">&#39;Plek&#39;</span><span class="p">,</span> <span class="s1">&#39;Prdx6&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Gpx4-ps&#39;</span><span class="p">,</span> <span class="s1">&#39;S100a6&#39;</span><span class="p">,</span> <span class="s1">&#39;Rpl18a&#39;</span><span class="p">,</span> <span class="s1">&#39;Vsir&#39;</span><span class="p">,</span> <span class="s1">&#39;C4b&#39;</span><span class="p">,</span> <span class="s1">&#39;Gfap&#39;</span><span class="p">,</span> <span class="s1">&#39;B2m&#39;</span><span class="p">,</span> <span class="s1">&#39;H2-D1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Apoe&#39;</span><span class="p">,</span> <span class="s1">&#39;Axl&#39;</span><span class="p">,</span> <span class="s1">&#39;Cd63&#39;</span><span class="p">,</span> <span class="s1">&#39;Cd63-ps&#39;</span><span class="p">,</span> <span class="s1">&#39;Cd9&#39;</span><span class="p">,</span> <span class="s1">&#39;Cstb&#39;</span><span class="p">,</span> <span class="s1">&#39;Ctsd&#39;</span><span class="p">,</span><span class="s1">&#39;Ctsl&#39;</span><span class="p">,</span> <span class="s1">&#39;Ctsz&#39;</span><span class="p">,</span> <span class="s1">&#39;H2-K1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Hexa&#39;</span><span class="p">,</span> <span class="s1">&#39;Lgals3bp&#39;</span><span class="p">,</span> <span class="s1">&#39;Lyz2&#39;</span><span class="p">,</span> <span class="s1">&#39;Npc2&#39;</span><span class="p">,</span> <span class="s1">&#39;Trem2&#39;</span><span class="p">,</span> <span class="s1">&#39;Tyrobp&#39;</span>
+<span class="p">]</span>
+<span class="n">valid_pigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">PIGs</span> <span class="k">if</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">]</span>
+
+<span class="c1"># Randomly select control genes</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2025</span><span class="p">)</span>
+<span class="n">candidate_bg</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">var_names</span> <span class="k">if</span> <span class="n">g</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_pigs</span><span class="p">]</span>
+<span class="n">random_genes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidate_bg</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_pigs</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">all_genes</span> <span class="o">=</span> <span class="n">valid_pigs</span> <span class="o">+</span> <span class="n">random_genes</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PIGs used to calculate score(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_pigs</span><span class="p">)</span><span class="si">}</span><span class="s2">):</span><span class="se">\n</span><span class="si">{</span><span class="n">valid_pigs</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random used to calculate score(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">random_genes</span><span class="p">)</span><span class="si">}</span><span class="s2">):</span><span class="se">\n</span><span class="si">{</span><span class="n">random_genes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+==================================================
+PIGs used to calculate score(29):
+[&#39;C1qa&#39;, &#39;C1qb&#39;, &#39;C1qc&#39;, &#39;Clu&#39;, &#39;Csf1r&#39;, &#39;Cst3&#39;, &#39;Ctss&#39;, &#39;Cx3cr1&#39;, &#39;Fcrls&#39;, &#39;Grn&#39;, &#39;Hexb&#39;, &#39;Igfbp5&#39;, &#39;Itgb5&#39;, &#39;Itm2b&#39;, &#39;Ly86&#39;, &#39;Olfml3&#39;, &#39;Prdx6&#39;, &#39;S100a6&#39;, &#39;C4b&#39;, &#39;Gfap&#39;, &#39;Apoe&#39;, &#39;Axl&#39;, &#39;Cd63&#39;, &#39;Cd9&#39;, &#39;Ctsd&#39;, &#39;Ctsl&#39;, &#39;Lyz2&#39;, &#39;Trem2&#39;, &#39;Tyrobp&#39;]
+
+Random used to calculate score(29):
+[&#39;Mertk&#39;, &#39;Trp73&#39;, &#39;Cbln1&#39;, &#39;Sst&#39;, &#39;Adgrb1&#39;, &#39;Igsf1&#39;, &#39;Rab35&#39;, &#39;Col20a1&#39;, &#39;Sncb&#39;, &#39;Fgfr3&#39;, &#39;Stag1&#39;, &#39;Inhba&#39;, &#39;Aurka&#39;, &#39;Baiap3&#39;, &#39;Pim1&#39;, &#39;Cacna1d&#39;, &#39;Slc13a3&#39;, &#39;Gbx1&#39;, &#39;Necab1&#39;, &#39;Homer2&#39;, &#39;Pou4f3&#39;, &#39;Cdh9&#39;, &#39;Wasf1&#39;, &#39;Itgax&#39;, &#39;Prox1&#39;, &#39;Cebpb&#39;, &#39;Ada&#39;, &#39;Ephb1&#39;, &#39;Gfra3&#39;]
+==================================================
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. Scoring (STADIM and X_norm)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;STADIM&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;STADIM_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">methods_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;STADIM&#39;</span><span class="p">:</span> <span class="s1">&#39;STADIM_log&#39;</span><span class="p">,</span> <span class="s1">&#39;X_norm&#39;</span><span class="p">:</span> <span class="s1">&#39;X_log&#39;</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">method</span><span class="p">,</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">methods_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1"># Temporary AnnData for scoring</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">AnnData</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span> <span class="n">obs</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+    <span class="c1"># Check for expression</span>
+    <span class="n">current_genes</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">valid_pigs</span> <span class="k">if</span> <span class="n">tmp</span><span class="p">[:,</span> <span class="n">g</span><span class="p">]</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">score_genes</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">gene_list</span><span class="o">=</span><span class="n">current_genes</span><span class="p">,</span> <span class="n">score_name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_PIGs_score&#39;</span><span class="p">)</span>
+    <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_PIGs_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s1">_PIGs_score&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+WARNING: adata.X seems to be already log-transformed.
+AnnData object with n_obs × n_vars = 72165 × 2766
+    obs: &#39;biosample_id&#39;, &#39;donor_id&#39;, &#39;species&#39;, &#39;species__ontology_label&#39;, &#39;sex&#39;, &#39;disease&#39;, &#39;disease__ontology_label&#39;, &#39;organ&#39;, &#39;organ__ontology_label&#39;, &#39;library_preparation_protocol&#39;, &#39;library_preparation_protocol__ontology_label&#39;, &#39;orig_index&#39;, &#39;batch&#39;, &#39;time&#39;, &#39;group&#39;, &#39;replicate&#39;, &#39;label&#39;, &#39;region&#39;, &#39;region_merged&#39;, &#39;top_level_cell_type&#39;, &#39;sub_level_cell_type&#39;, &#39;sample&#39;, &#39;n_genes&#39;, &#39;n_genes_by_counts&#39;, &#39;log1p_n_genes_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;size_factor&#39;, &#39;min_dist_to_plaque&#39;, &#39;STADIM_PIGs_score&#39;, &#39;X_norm_PIGs_score&#39;
+    var: &#39;n_cells&#39;, &#39;n_cells_by_counts&#39;, &#39;mean_counts&#39;, &#39;log1p_mean_counts&#39;, &#39;pct_dropout_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;highly_variable&#39;
+    uns: &#39;log1p&#39;, &#39;top_hvgs&#39;, &#39;neighbors_STADIM&#39;, &#39;umap&#39;, &#39;top_level_cell_type_colors&#39;
+    obsm: &#39;spatial&#39;, &#39;S_scale&#39;, &#39;X_hvg_scale&#39;, &#39;X_pca&#39;, &#39;STADIM&#39;, &#39;X_umap&#39;, &#39;X_umap_STADIM&#39;, &#39;spatial_scaled&#39;
+    layers: &#39;X_raw&#39;, &#39;X_norm&#39;, &#39;X_log&#39;, &#39;STADIM&#39;, &#39;STADIM_withbatch&#39;, &#39;STADIM_log&#39;
+    obsp: &#39;neighbors_STADIM_distances&#39;, &#39;neighbors_STADIM_connectivities&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 3. Focus on Disease Core Region</span>
+<span class="n">disease_mask</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;S5&#39;</span><span class="p">,</span> <span class="s1">&#39;S6&#39;</span><span class="p">,</span> <span class="s1">&#39;S7&#39;</span><span class="p">,</span> <span class="s1">&#39;S8&#39;</span><span class="p">])</span>
+<span class="n">core_mask</span> <span class="o">=</span> <span class="n">disease_mask</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;min_dist_to_plaque&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">adata_core</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">core_mask</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># 4. Correlation Calculation &amp; Heatmap Plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">split_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_pigs</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">layer</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">methods_map</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="c1"># Extract expression and compute Pearson correlation</span>
+    <span class="n">expr</span> <span class="o">=</span> <span class="n">adata_core</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="s2">&quot;todense&quot;</span><span class="p">):</span> <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
+    <span class="n">df_corr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">expr</span><span class="p">)[:,</span> <span class="p">[</span><span class="n">adata_core</span><span class="o">.</span><span class="n">var_names</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">all_genes</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="n">all_genes</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+    <span class="c1"># Plotting</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_corr</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">xticklabels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+    <span class="c1"># Add quadrant separators</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">split_idx</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">split_idx</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="c1"># Simple Quadrant Labels</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">split_idx</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">split_idx</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;PIGs&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">split_idx</span><span class="o">*</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">split_idx</span><span class="o">*</span><span class="mf">1.5</span><span class="p">,</span> <span class="s1">&#39;Random&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Tutorial5_Multi_MB_SCP1375_27_0.png" src="_images/Tutorial5_Multi_MB_SCP1375_27_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Tutorial4_Multi_MOB.html" class="btn btn-neutral float-left" title="Tutorial 4: Cross-platform denoising and integration of MOB datasets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Tutorial6_Multi_VisiumHD.html" class="btn btn-neutral float-right" title="Tutorial 6: Scalability analysis on million-scale Visium HD datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Shutong Xiao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -104,7 +104,7 @@ stadim --input ./data.h5ad --save_preprocessed_h5ad ./data_preprocessed.h5ad --s
 
 ## Tutorials
 
-To replicate the results presented in our paper or to learn how to use STADIM step-by-step, please refer to: https://stadim.readthedocs.io/en/latest/index.html
+To replicate the results presented in our paper or to learn how to use STADIM step-by-step, please refer to: https://stadim.readthedocs.io/en/latest/index.html. The input .h5ad files used in the tutorials can be downloaded from https://figshare.com/articles/dataset/STADIM_tutorial_data/35020597.
 
 You can also test the full pipeline using the provided demo dataset (Mouse Olfactory Bulb from Stereo-seq and Slide-seq V2 platforms):
 

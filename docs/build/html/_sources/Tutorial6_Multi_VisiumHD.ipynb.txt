@@ -14,7 +14,10 @@
    "metadata": {},
    "source": [
     "In this tutorial, we challenged STADIM with a million-scale dataset from the 10x Visium HD platform to demonstrate its prowess in handling ultra-high-resolution spatial data.  \n",
-    "We download the data via https://www.10xgenomics.com/platforms/visium/product-family/dataset-human-crc."
+    "\n",
+    "The original data can be downloaded from: https://www.10xgenomics.com/platforms/visium/product-family/dataset-human-crc.  \n",
+    "\n",
+    "Alternatively, the preprocessed `P1CRC.h5ad` `P2CRC.h5ad` `P5CRC.h5ad` file used in this tutorial is available from the STADIM tutorial dataset on Figshare https://figshare.com/articles/dataset/STADIM_tutorial_data/35020597. It contains the original expression data with `.obs['sample']` information added, without additional filtering or expression modification."
    ]
   },
   {
